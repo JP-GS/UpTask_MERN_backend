@@ -1,5 +1,6 @@
 import { json } from "express";
 import Proyecto from "../models/Proyecto.js";
+import Tarea from "../models/Tarea.js";
 
 const obtenerProyectos = async (req, res) => {
 
@@ -29,15 +30,17 @@ const obtenerProyecto = async (req, res) => {
     const error = new Error("No encontrado");
     return res.status(404).json({ msg: error.message });
    }
-
-   console.log(proyecto.creador);
-   console.log(proyecto._id);
+   
    if(proyecto.creador.toString() !== req.usuario._id.toString()) {
     const error = new Error("Acción no válida");
-    return res.status(401).json({ msg: error.message });
+    return res.status(403).json({ msg: error.message });
    }
 
-   res.json(proyecto);
+
+
+   //Obtener las tareas del proyecto
+   const tareas = await Tarea.find().where('proyecto').equals(proyecto._id);
+    return res.json({proyecto,tareas});
 };
 
 const editarProyecto = async (req, res) => {
@@ -54,7 +57,7 @@ const editarProyecto = async (req, res) => {
    console.log(proyecto._id);
    if(proyecto.creador.toString() !== req.usuario._id.toString()) {
     const error = new Error("Acción no válida");
-    return res.status(401).json({ msg: error.message });
+    return res.status(403).json({ msg: error.message });
    }
 
    proyecto.nombre = req.body.nombre || proyecto.nombre;
@@ -79,17 +82,15 @@ const eliminarProyecto = async (req, res) => {
     const error = new Error("No encontrado");
     return res.status(404).json({ msg: error.message });
    }
-
-   console.log(proyecto.creador);
-   console.log(proyecto._id);
+   
    if(proyecto.creador.toString() !== req.usuario._id.toString()) {
     const error = new Error("Acción no válida");
-    return res.status(401).json({ msg: error.message });
+    return res.status(403).json({ msg: error.message });
    }
 
    try {
     await proyecto.deleteOne();
-    res.json({msg: "Proyecto liminado"});
+    res.json({msg: "Proyecto eliminado"});
    } catch (error) {
     console.log(error);
    }
@@ -99,8 +100,6 @@ const agregarColaborador = async (req, res) => {};
 
 const eliminarColaborador = async (req, res) => {};
 
-const obtenerTareas = async (req, res) => {};
-
 export {
     obtenerProyectos,
     nuevoProyecto,
@@ -109,5 +108,4 @@ export {
     eliminarProyecto,
     agregarColaborador,
     eliminarColaborador,
-    obtenerTareas,
 }

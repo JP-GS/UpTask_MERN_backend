@@ -4,6 +4,8 @@ const generarId = () => {
     const fecha = Date.now().toString(32);
 
     return random + fecha;
+    console.log(random)
+    console.log(fecha)
 };
 
 export default generarId;

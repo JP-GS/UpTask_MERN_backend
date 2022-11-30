@@ -7,7 +7,6 @@ const crear = async (req, res) => {
     //Evitar registros duplicados
     const {email} = req.body;
     const existeUsuario = await Usuario.findOne({email});
-    console.log(existeUsuario);
 
     if(existeUsuario) {
         const error = new Error('El usuario ya existe');
@@ -121,8 +120,7 @@ const nuevoPassword = async (req, res) => {
         return res.status(404).json({msg: error.message});
     }
 
-    console.log(token);
-    console.log(password);
+    
 };
 
 const perfil = async (req, res)  => {
