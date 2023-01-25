@@ -9,8 +9,8 @@ import { crear,
          nuevoPassword,
          perfil
         } from "../controllers/usuarioController.js";
-
-import checkAuth from "../middleware/checkauth.js";
+        
+import checkAuth from '../middleware/checkAuth.js';
 
 // import {  } from '../controllers/usuarioController.js';
 
