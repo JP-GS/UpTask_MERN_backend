@@ -1,5 +1,4 @@
 import express from "express";
-// import { get } from "mongoose";
 const router = express.Router();
 import { crear,
          autenticar,
@@ -11,8 +10,6 @@ import { crear,
         } from "../controllers/usuarioController.js";
         
 import checkAuth from '../middleware/checkAuth.js';
-
-import { autenticar, confirmar, olvidePassword, comprobarToken, nuevoPassword, perfil  } from '../controllers/usuarioController.js';
 
 //Autenticacion, registro y confirmacion de usuarios
 router.post('/', crear); //Crea un nuevo usuario
