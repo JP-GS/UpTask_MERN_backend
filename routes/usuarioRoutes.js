@@ -12,7 +12,7 @@ import { crear,
         
 import checkAuth from '../middleware/checkAuth.js';
 
-import { crear, autenticar, confirmar, olvidePassword, comprobarToken, nuevoPassword, perfil  } from '../controllers/usuarioController.js';
+import { autenticar, confirmar, olvidePassword, comprobarToken, nuevoPassword, perfil  } from '../controllers/usuarioController.js';
 
 //Autenticacion, registro y confirmacion de usuarios
 router.post('/', crear); //Crea un nuevo usuario
