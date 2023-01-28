@@ -41,8 +41,10 @@ const servidor = app.listen(PORT, () => {
     console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
 
+
 //Socket.io
 const io = new Server(servidor, {
+    noServer: true,
     pingTimeout : 60000,
     cors: {
         origin: process.env.FRONTEND_URL,
@@ -56,17 +58,17 @@ io.on("connection", (socket) => {
     socket.on('abrir proyecto', proyecto => {
         socket.join(proyecto)
     });
-
+    
     socket.on('nueva tarea', tarea => {
         const proyecto = tarea.proyecto;
         socket.to(proyecto).emit('tarea agregada', tarea);
     });
-
+    
     socket.on('eliminar tarea', tarea => {
         const proyecto = tarea.proyecto;
         socket.to(proyecto).emit('tarea eliminada', tarea);
     })
-
+    
     socket.on('actualizar tarea', tarea => {
         const proyecto = tarea.proyecto._id;
         socket.to(proyecto).emit('tarea actualizada', tarea)
@@ -75,4 +77,5 @@ io.on("connection", (socket) => {
         const proyecto = tarea.proyecto._id;
         socket.to(proyecto).emit('nuevo estado', tarea)
     })
-  });
+});
+
